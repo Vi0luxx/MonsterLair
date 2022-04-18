@@ -1,0 +1,1078 @@
+/* Name: Violet Pepper
+ * Coarse: ICS 3U
+ * Teacher: Mrs. McCafferey
+ * Date: 
+ * Description: 
+ */
+
+package projects;
+
+import java.util.Scanner;
+
+public class Culminating_MonstersLair_Rejig {
+
+	public static void main(String[] args) throws InterruptedException {
+		Scanner input= new Scanner(System.in);
+
+		/*play title screen:
+		 * title name
+		 * interface loop
+		 */
+		System.out.println("");
+		System.out.println("███▄ ▄███▓ ▒█████   ███▄    █   ██████ ▄▄▄█████▓▓█████  ██▀███    ██████ \n"
+				+ "▓██▒▀█▀ ██▒▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒▒██    ▒ \n"
+				+ "▓██    ▓██░▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒░ ▓██▄   \n"
+				+ "▒██    ▒██ ▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄    ▒   ██▒\n"
+				+ "▒██▒   ░██▒░ ████▓▒░▒██░   ▓██░▒██████▒▒  ▒██▒ ░ ░▒████▒░██▓ ▒██▒▒██████▒▒\n"
+				+ "░ ▒░   ░  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░▒ ▒▓▒ ▒ ░\n"
+				+ "░  ░      ░  ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░    ░     ░ ░  ░  ░▒ ░ ▒░░ ░▒  ░ ░\n"
+				+ "░      ░   ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░    ░         ░     ░░   ░ ░  ░  ░  \n"
+				+ "       ░       ░ ░           ░       ░              ░  ░   ░           ░  \n"
+				+ "                                                                          \n"
+				+ "                ██▓    ▄▄▄       ██▓ ██▀███                               \n"
+				+ "               ▓██▒   ▒████▄    ▓██▒▓██ ▒ ██▒                             \n"
+				+ "               ▒██░   ▒██  ▀█▄  ▒██▒▓██ ░▄█ ▒                             \n"
+				+ "               ▒██░   ░██▄▄▄▄██ ░██░▒██▀▀█▄                               \n"
+				+ "               ░██████▒▓█   ▓██▒░██░░██▓ ▒██▒                             \n"
+				+ "               ░ ▒░▓  ░▒▒   ▓▒█░░▓  ░ ▒▓ ░▒▓░                             \n"
+				+ "               ░ ░ ▒  ░ ▒   ▒▒ ░ ▒ ░  ░▒ ░ ▒░                             \n"
+				+ "                 ░ ░    ░   ▒    ▒ ░  ░░   ░                              \n"
+				+ "                   ░  ░     ░  ░ ░     ░\n");
+		System.out.println("\n#########################################################################\n");
+		Thread.sleep(1000);
+		/*
+		 * title screen:
+		 * loops options
+		 * play breaks from loop to start game
+		 * exit terminates program
+		 * help shows commands
+		 */
+		while (true){
+			String title;
+			System.out.println("Help\tPlay\tExit");
+			title = input.nextLine();
+			if (title.equalsIgnoreCase("Exit"))
+			{
+				System.exit(0);
+				break;
+			}
+			else if (title.equalsIgnoreCase("help"))
+			{
+				System.out.println("Monster's Lair is a text based adventure,\nto progress, use the following\n\n"
+						+ "Commands:\n"
+						+ "\"Enter\" + \"room name\": to move into a nearby room\n"
+						+ "\"Check\" + \"object name\": to recieve a description of the object\n"
+						+ "\"Use\" + \"object name\": to use something from the world or from your inventory\n"
+						+ "\"Inventory\": shows your current inventory\n"
+						+ "\"Look\": describes the room you're in\n"
+						+ "\"Help\": to show command list\n"
+						+ "Example: (check window)\n");
+				Thread.sleep(3000);
+			}
+			else if (title.equalsIgnoreCase("play"))
+			{
+				System.out.println("Loading...");
+				Thread.sleep(2000);
+				break;
+			}
+			else
+			{
+				System.out.println("Sorry, please enter a valid input");
+			}//end if
+		}//end while
+		jump();
+
+		//initialize base variable
+		boolean[] glassDoor = new boolean[1];
+		int foundNew = 0;
+		int safeCode = ((int) ((Math.random()*9)*1000)+((int) (Math.random()*9)*100)+((int) (Math.random()*9)*100)+((int) (Math.random()*9)));
+		String[] inventoryNew = new String[12];
+		
+		//initialize hammer variables
+		int hammerRoom = (int) (Math.random() *5);
+		boolean[] hammer = new boolean[1];
+
+		//initialize locks array
+		boolean[] locksTrue = new boolean[3];
+
+		//initialize rooms
+		String[][] rooms = new String[6][4];
+		rooms [0][0] = " Bedroom";
+		rooms [1][0] = " Living Room";
+		rooms [2][0] = " Dining Room";
+		rooms [3][0] = " Kitchen";
+		rooms [4][0] = " Entry Hall";
+		rooms [5][0] = " Bathroom";
+
+		rooms [0][1] = "You're in the Bedroom\nThere is a bed in the middle of the room,\nto the right is a window, to the left is a painting, behind you is a door to the Living Room";
+		rooms [1][1] = "You're in the Living Room\nThere is a couch and coffee table in the middle of the room facing a tv,\nto the left is a balcony with a Glass Door, to the right is the dining room, behind you is a door to the bedroom";
+		rooms [2][1] = "You're in the Dining Room\nA neat set of a table and chairs is in the middle of the room\nTo the left is the living room, behind you is the kitchen";
+		rooms [3][1] = "You're in the Kitchen\nYour surrounded by cabinets and countertops,to your left is a fridge\nBehind you is an archway to the dining room, to the left is a door to the Entry Hall";
+		rooms [4][1] = "You're in the Entry Hall\nA spacious room with many doors\nTo your left is a door labeled “Laundry,” in front of you is the front door (exit), to your right is a door to the Bathroom";
+		rooms [5][1] = "You're in the Bathroom\nThere’s a toilet, shower, and sink. Above the sink is a mirror\nBehind you is a door to the Entry Hall";
+
+		rooms [0][2] = "There is a queen sized bed sitting in the middle of the room, it's covered in a blue blanket and two pillows sit neatly on top.\nThe room is familiar and your sure it's yours\nbut you find the bed much too big for just yourself\nThe walls are painted a solid grey and are scarcely covered.\nyou hear nothing but the sound of wind coming from outside.";
+		rooms [1][2] = "A cozy living room, the fireplace looks entirely un-used,\nTheres a couch in the middle of the room facing a black screen,\nnext to the couch is a coffee table littered with objects,\nThe wind rattles the glass doors to the balcony and the moonlight fills the room";
+		rooms [2][2] = "The room is scarce with the axception of a table and two chairs,\nyou can see both the living room and kitchen from here";
+		rooms [3][2] = "Theres counters and cabinets wrapping around the room,\nIt's messy and the sink is filled with dirty dishes,\nyou notice how hungry you are when in here,\nmaybe getting some food will help clear your head";
+		rooms [4][2] = "There's a door on every wall,\nthe most noticable of them is the front door, it is heald shut by chains and three padlocks,\nyou need to find a way to open it";
+		rooms [5][2] = "A small room covered in faided white tiles,\nit's clearly unkept";
+
+		rooms [0][3] = " ############################################################################\n"
+				+ "_________________________________________________________________________________\n"
+				+ "                                                            o(=(=(=(=)=)=)=)o\n"
+				+ "       _____                                                 !!!!!!}!{!!!!!!\n"
+				+ "      |     |                                                !!!!!} | {!!!!!\n"
+				+ "      | //  |        _!_     ()              ()     _!_      !!!!}  |  {!!!! \n"
+				+ "      |     |       |~@~|    ||______________||    |~@~|     !!!'   |   '!!!  \n"
+				+ "      |_____|       |___|    |                |    |___|     ~@~----+----~@~\n"
+				+ "     _________        |      |      ~@@~      |      |       !!!    |    !!!\n"
+				+ "    |____-____|      ( )     |_______  _______|     ( )      !!!    |    !!! \n"
+				+ "    |____-____|   __(___)__  {__~@~__}{__~@~__}  __(___)__   !!!____|____!!!\n"
+				+ "    |____-____|    |__-__|   %%%%%%%%%%%%%%%%%%   |__-__|    !!!=========!!!\n"
+				+ "____|____-____|____|_____|_ %%%%%%%%%%%%%%%%%%%% _|_____|____!!!_________!!!_\n"
+				+ "    |/       \\|    |     | %%%%%%%%%%%%%%%%%%%%%% |     |   \n"
+				+ "                          %%%%%%%%%%%%%%%%%%%%%%%%\n"
+				+ "                         %%%%%%%%%%%%%%%%%%%%%%%%%%\n"
+				+ "                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%\n"
+				+ "                       /!!!!!!!!!!!!!!!!!!!!!!!!!!!!\\\n"
+				+ "                       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  \n"
+				+ "                       !!!!!!!!!!!!!!!!!!!!!!!!!!lc!!\n"
+				+ "                       `======~@~==========~@~======`\n"
+				+ "                      `==============================`\n"
+				+ "                     `====~@~==================~@~====`\n"
+				+ "                    `==================================`\n"
+				+ "                   `==~@~==========================~@~==`\n"
+				+ "############################################################################\n";
+		rooms [1][3] = "############################################################################\n"
+				+ "\n"
+				+ " ______________________________________________\n"
+				+ "|: : : : : : : : : : : : : : : : : : : : : : : : |\n"
+				+ "| : : : : : : : :|---------------|: : : : : : : :|\n"
+				+ "|: : : : : : : : | //            | : : : : : : : |\n"
+				+ "| :______ : : : :|            // |: : : : : : : :|\n"
+				+ "|:|======| :_: : |_______________| : :_: : : : : |\n"
+				+ "| ||\\|||||:/_\\: :,: : :.'o'.: : :,: :/_\\: : : : :|\n"
+				+ "|:|======| =|= __#_____|___|_____#__ =|= : : : : |\n"
+				+ "| |______|: ^ :[___]           [___]: ^ : : : : :|\n"
+				+ "|:|__  __| : : [_|_] o       o [_|_] : : : : :_: |\n"
+				+ "| | .||. |: : :[___] |       | [___]: : :_!_: : :|\n"
+				+ "‘=|__||__|====_[_|_]/!\\_@@@_/!\\[_|_]_===/___\\= : ’\n"
+				+ "              '====================='     | _  \n"
+				+ "    __.;;.__      _______________         |( | \n"
+				+ "   / ;(;;); \\    (               )       _|_)| \n"
+				+ "  /__________\\==(\\               /)=====(____| \n"
+				+ "  |==========|===|               |======LLLLLL \n"
+				+ " ~===============|_______________|===========~ \n"
+				+ "~================LLLLLLLLLLLLLLLLL============~\n"
+				+ "==============================================~\n"
+				+ "############################################################################\n";
+		rooms [2][3] = "############################################################################\n"
+				+ " ___________________________________________\n"
+				+ "|| . . . . . . . . . . . . . . .. . . . . . ||\n"
+				+ "||. . . . . . . . . . . . . . . .. . . . . .||\n"
+				+ "|| . . . . . . . . . . . . . . . . . . . . .||\n"
+				+ "||. . . . . . . . . . . . . . . . . . . . . ||\n"
+				+ "|  . .  _  . . . . . . . . . .. .. . _  . . .|\n"
+				+ "| . .  /_\\ ||   ____;(;);____  ||.  /_\\  . . |\n"
+				+ "|  . . =|= ||__ !!!!!;;;!!!!!__|| . =|= . . .|\n"
+				+ "| . . . . .|/_/|!!!!!!;!!!!!!\\_\\|. . . . . . |\n"
+				+ "|==========|| ||  ||     || || ||============|\n"
+				+ "|          |  |   |       |  |  |            |\n"
+				+ "\n"
+				+ "\n"
+				+ "############################################################################\n";
+		rooms [3][3] = "############################################################################\n"
+				+ "\n"
+				+ "\n"
+				+ "                                 ________________________________\n"
+				+ "                              .'               .'               .|\n"
+				+ "          |  |  |  |  |     .'               .'               .' |\n"
+				+ "          | (_) |  |  |   .'_______________.'______________ .'   |\n"
+				+ "         / \\    @ [_]d b  | ___ _____ ___ || ___ _____ ___ |     |\n"
+				+ "         |_|              ||  //         ||||             ||     |\n"
+				+ "      ____________________||          [  |||| ]           ||     | __________\n"
+				+ "    .'           .'       ||          [  |||| ]           ||    .'          .'|\n"
+				+ "  .'           .'         ||_____===_____||||_____===_____||  .'          .'  |\n"
+				+ ".'___________.'___________|_______________||_______________|.'__________.'    |\n"
+				+ "|.----------.|.----------.|.             .||.             .||    |_____.----------.\n"
+				+ "|]          ||]          |||_____________||||  //         |||  .'      [          |\n"
+				+ "||          |||          ||.-----___-----.||.             .||.'        |          |\n"
+				+ "||          |||          |||_____________||||             |||==========|          |\n"
+				+ "||          |||          ||.-----___-----.||.             .||    |_____|          |\n"
+				+ "|]         o||]         o|||             ||||             |||  .'      [        'o|\n"
+				+ "||          |||          ||.             .||.             .||.'        |          |\n"
+				+ "||          |||          |||             ||||             |||==========|          |\n"
+				+ "||          |||          |||             |||.             .||    |_____|          |\n"
+				+ "|]          ||]          |||         //  ||||        //   |||  .'      [          |\n"
+				+ "||__________|||__________|||_____________||||_____________|||.'________|__________|\n"
+				+ "''----------'''----------'''------------------------------'''----------''\n"
+				+ "\n"
+				+ "############################################################################\n";
+		rooms [4][3] = "############################################################################\n"
+				+ "|                   __________                   |\n"
+				+ "|                  |  __  __  |                  |\n"
+				+ "|                  | |  ||  | |                  |\n"
+				+ "|          /|      | |  ||  | |      |\\          |\n"
+				+ "|         / |      | |__||__| |      | \\         |\n"
+				+ "|        //||      |  __  __()|      ||\\\\        |\n"
+				+ "|       |/|||      | |  ||  | |      |||\\|       |\n"
+				+ "|       |||||      | |  ||  | |      |||||       |\n"
+				+ "|       |||/|      | |  ||  | |      |\\|||       |\n"
+				+ "|       ||/0|      | |  ||  | |      |0\\||       |\n"
+				+ "|       | /||      | |__||__| |      ||\\ |       |\n"
+				+ "|       |/|||  ####|__________|####  |||\\|       |\n"
+				+ "|       ||||| #  ~==============~  # |||||       |\n"
+				+ "|       |||/|#  ~================~  #|\\|||       |\n"
+				+ "|       ||//   ~==================~   \\\\||       |\n"
+				+ "|       | /   ~====================~   \\ |       |\n"
+				+ "|      #|/                              \\|#      |\n"
+				+ "############################################################################\n";
+		rooms [5][3] = "############################################################################\n"
+				+ "\n"
+				+ "_______________________________________________________________________ \n"
+				+ "|% % % % % % % % % % % % % % % % % % % % % % %% % % % % % % % % % % % %| \n"
+				+ "| % % % % % % % % % % % % % % % % % % % % % %  % % % % % % % % % % % % | \n"
+				+ "|% % % % % %_____________________________ % %  % % % % % % % % % % % % | \n"
+				+ "| % % % % %|  _________________________  | % %% % % % % % % % % % % % %| \n"
+				+ "|% % _ % % |O|                         |O|% %  % % % _ % % % % % % % % | \n"
+				+ "| % /_\\ % %| | //                      | | % %% % % /_\\ % % % % % % % %| \n"
+				+ "|%  =|=  % |O|                         |O|% %  % %  =|=  % % % % % % % | \n"
+				+ "| % % % % %| |    //                   | | % %% % % % % % % % % % % % %| \n"
+				+ "|% % % % % |O|                         |O|% %  % % % % % % % % % % % % | \n"
+				+ "|==========| |                         | |=============================| \n"
+				+ "|          |O|                         |O|                             | \n"
+				+ "|          | | //                      | |     ________________        | \n"
+				+ "|          |O|_________________________|O|    |________________|       | \n"
+				+ "|          |_____________________________|      |            |    _    | \n"
+				+ "|           ______________/;____________        |~           |  =)_)=  | \n"
+				+ "|         /`        .--T--|--T--.       `\\      |            |   (_(   | \n"
+				+ "|        /_________'------'------'________\\     |__%______%__|   )_)   | \n"
+				+ "|         |  _____   ____   ____   _____ |       .`        `.          | \n"
+				+ "|         | |__~__| |    | |    | |__~__||       :          :          | \n"
+				+ "|         |         |    | |    |        |        '.      .'           | \n"
+				+ "l_________|         |   {| |}   |        |__________\\`'-'`/____________| \n"
+				+ "          |         |    | |    |        |           |   | \n"
+				+ "          |_________|____|_|____|________|           |___|\n"
+				+ "############################################################################\n";
+
+		//player location
+		boolean[] player = new boolean[rooms.length];
+
+		//inventory
+		String[][] inventory = new String[12][2];
+
+		inventory[0][0] = " Wooden Box";
+		inventory[1][0] = " Book";
+		inventory[2][0] = " Code Note: "+ safeCode;
+		inventory[3][0] = " Picture";
+		inventory[4][0] = " Warm Steak";
+		inventory[5][0] = " Rusty Key";
+		inventory[6][0] = " Cold Steak";
+		inventory[7][0] = " Gold Key";//on
+		inventory[8][0] = " Dirty Key";//on
+		inventory[9][0] = " Shiny Key";//on
+		inventory[10][0] = " Meat Key";//on
+		inventory[11][0] = " Hammer";
+
+		//check outputs for the inventory items
+		inventory[0][1] = "It's locked";
+		inventory[1][1] = "It’s a diary,\nmany pages are ripped out and it’s mostly illegible,\nthere’s a page falling out";
+		inventory[2][1] = safeCode + "";
+		inventory[3][1] = "Theres a woman with long golden hair and is smiling happily, there seems to be some writing on the back";
+		inventory[4][1] = "You feel your hunger starting to consume you";
+		inventory[5][1] = "A key covered in rust, hopefuly it still works";
+		inventory[6][1] = "It's not raw but the idea of cold steak is too unappetizing";
+		inventory[7][1] = "It has detailed carvings on it";//on
+		inventory[8][1] = "There's flakes of neon green on it and a strange blue slime";//on
+		inventory[9][1] = "A perfetcly normal key";//on
+		inventory[10][1] = "How did it even end up in there?";//on
+		inventory[11][1] = "the possabilities are endless...";
+
+		//checkable that change
+		boolean[] checkTrueFalse = new boolean[5];
+
+		//starting lines
+		System.out.println(rooms[0][3]);
+		System.out.println("You've woken up in a dark room,\n your memories are blurry but you desperately want to escape\n");
+		System.out.println(rooms[0][2]);	
+
+		//game inputs
+		while(true) {
+			//bed end lines
+			if (locksTrue[0] == true && locksTrue[1] == true && locksTrue[2] == true) {
+				System.out.println("The Exit creaks open");
+				Thread.sleep(3000);
+				System.out.println("You run out of the apartment,\nyou have nowhere to go,\nnothing to return to...");
+				Thread.sleep(3000);
+				System.out.println("but you’re free...\n");
+				Thread.sleep(3000);
+				System.out.println("as you exit the building, the moonlight pours against you,\nand suddenly your memories come flooding back...");
+				Thread.sleep(3000);
+				System.out.println("you were never supposed to leave...\nyou were in there for a reason...");
+				Thread.sleep(3000);
+				System.out.println("as your body warps and your teach grow sharp... you begin to lose sense of humanity\nand rush off into the night.");
+				Thread.sleep(3000);
+				System.out.println("searching for your next victim\n");
+				Thread.sleep(3000);
+				System.out.println("End");
+				System.exit(0);
+			}
+			if (glassDoor[0] == true) {
+				//good end lines
+				jump();
+				System.out.println("############################################################################\r\n" + 
+						"            ░░▓▓▓▓▒▒░░▓▓▓▓▒▒░░▓▓██▒▒░░                                                            ░░▒▒░░▒▒▒▒░░░░▒▒▒▒  ▒▒░░                \r\n" + 
+						"                ░░▒▒▒▒░░▒▒░░▒▒▒▒▒▒▒▒▓▓▓▓                            ▒▒▒▒░░                      ░░░░░░░░░░░░▒▒▒▒░░░░░░▒▒                  \r\n" + 
+						"                ▒▒░░▒▒▒▒▓▓▒▒▓▓▓▓▓▓▒▒▓▓▓▓▓▓░░                    ▓▓▓▓▓▓▓▓▒▒▒▒░░                    ░░▒▒░░▒▒▒▒▒▒▒▒░░▒▒▒▒                    \r\n" + 
+						"                ░░▓▓▓▓░░▓▓▓▓▒▒░░▒▒░░▒▒▒▒▓▓▒▒▒▒                ▓▓██▒▒▒▒▒▒░░░░░░                ▒▒░░░░░░░░▒▒░░▒▒░░▒▒▒▒                      \r\n" + 
+						"                  ░░░░▒▒▒▒▒▒▒▒▓▓▒▒▓▓██▓▓▒▒▓▓▓▓▓▓            ▒▒██▒▒▒▒▒▒░░░░░░  ░░              ░░░░░░░░▒▒▓▓░░▒▒░░▒▒                        \r\n" + 
+						"                      ▓▓▓▓▓▓▒▒▓▓▒▒▓▓▒▒▓▓██▒▒▓▓▓▓▓▓          ▓▓██▓▓▓▓▓▓░░▓▓░░  ░░            ░░░░░░░░░░▒▒░░▒▒▒▒░░  ░░                      \r\n" + 
+						"                        ░░░░▓▓▒▒▓▓▒▒██▒▒▓▓▓▓██▒▒████        ▓▓▓▓▓▓▒▒▒▒░░▒▒░░  ▒▒          ░░░░░░░░░░▒▒░░░░░░░░░░▓▓                        \r\n" + 
+						"                        ▒▒▒▒▓▓▓▓▓▓▓▓▓▓██▓▓▒▒▓▓▓▓▒▒████░░    ▓▓▓▓▓▓▒▒▒▒▒▒░░  ░░▒▒░░      ░░░░▒▒░░░░░░░░▒▒▒▒░░░░░░                          \r\n" + 
+						"                        ░░▓▓▒▒▒▒██▓▓▓▓▓▓████▒▒▓▓██▓▓██▓▓░░  ▓▓▓▓▓▓▓▓▒▒░░    ░░▒▒▒▒  ░░░░  ░░░░▒▒▒▒  ▒▒░░░░▒▒▒▒░░                          \r\n" + 
+						"                          ░░▓▓▒▒▒▒▓▓▓▓▓▓▒▒▓▓▓▓▓▓▒▒██▓▓▓▓██░░▓▓████▓▓▓▓░░░░░░▒▒▓▓▓▓░░░░  ░░░░░░░░░░░░░░  ▒▒░░░░                            \r\n" + 
+						"                            ░░▓▓▓▓▒▒▒▒▓▓▓▓▒▒▓▓▓▓██▒▒▓▓▓▓▓▓██▓▓▓▓████▓▓▒▒░░▒▒▓▓▓▓▓▓░░░░░░░░    ░░  ▒▒  ▒▒▓▓░░                              \r\n" + 
+						"                                ▓▓▓▓▓▓▒▒▒▒██▓▓▒▒████░░▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▒▒░░▓▓▓▓▓▓▓▓░░  ░░    ░░░░░░░░░░▒▒░░                                \r\n" + 
+						"                                  ▓▓██▓▓▓▓▒▒▓▓██░░▓▓██░░██▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▓▓▓▓▒▒░░░░░░  ░░  ░░░░░░▒▒  ░░                                \r\n" + 
+						"                                    ▒▒▓▓▒▒██▒▒▓▓██░░▓▓██░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░    ░░░░░░░░                                    \r\n" + 
+						"                                      ▒▒██████▓▓▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░        ░░░░                                      \r\n" + 
+						"                                          ▓▓████████▓▓▓▓▒▒▓▓▓▓▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░  ░░░░                                              \r\n" + 
+						"                                              ▒▒▓▓██▓▓▒▒▒▒██▓▓▒▒░░░░░░░░░░░░░░░░  ░░░░░░░░                                                \r\n" + 
+						"                                                      ▒▒▓▓██▒▒▒▒░░░░░░░░▒▒▒▒░░░░    ░░░░░░░░░░                                            \r\n" + 
+						"                                                  ▒▒▓▓▒▒▓▓▓▓▓▓▒▒▒▒░░░░░░▒▒░░░░      ░░░░  ░░░░    ░░                                      \r\n" + 
+						"                                              ▒▒██▓▓▒▒▒▒▓▓▒▒▓▓▓▓▒▒▒▒▒▒░░░░░░░░      ░░░░░░    ░░░░░░░░░░                                  \r\n" + 
+						"                                          ░░████▓▓▒▒▒▒▓▓░░  ▓▓▓▓▒▒▒▒▒▒▒▒░░░░░░░░      ░░░░        ░░░░░░░░░░                              \r\n" + 
+						"                                                                                            \r\n" + 
+						"############################################################################\n");
+				System.out.println("You step out onto the balcony...");
+				Thread.sleep(3000);
+				System.out.println("The moon shines brightly onto you...");
+				Thread.sleep(3000);
+				System.out.println("The wind howls around you...");
+				Thread.sleep(3000);
+				System.out.println("you feel a familiar presence...");
+				Thread.sleep(3000);
+				System.out.println("A golden haired woman with glowing wings appears before you...");
+				Thread.sleep(3000);
+				System.out.println("You hear a soft whisper over the sound of wind...");
+				Thread.sleep(3000);
+				System.out.println("\"I forgive you\"...");
+				Thread.sleep(3000);
+				System.out.println("You notice a monsterous presence within you fade...");
+				Thread.sleep(3000);
+				System.out.println("As you melt away into the moonlight...");
+				Thread.sleep(3000);
+				System.out.println("Good End");
+				System.exit(0);
+			}
+			//initialize variable
+			String game;
+
+			while (true){
+				try {
+					game = input.nextLine();
+					break;
+				} catch (Exception e) {
+					System.out.println("nothing happened");
+					input.nextLine();
+				} 
+			}
+			if (countWords(game)==1) {
+				if (game.equalsIgnoreCase("inventory")) {
+					Inventory(inventoryNew);
+				}
+				else if (game.equalsIgnoreCase("look")) {
+					look(player, rooms, hammer, hammerRoom, foundNew, inventory, inventoryNew);
+				}
+				else if (game.equalsIgnoreCase("help")) {
+					System.out.println("Commands:\n"
+							+ "\"Enter\" + \"room name\": to move into a nearby room\n"
+							+ "\"Check\" + \"object name\": to recieve a description of the object\n"
+							+ "\"Use\" + \"object name\": to use something from the world or from your inventory\n"
+							+ "\"Inventory\": shows your current inventory\n"
+							+ "\"Look\": describes the room you're in\r\n");
+					Thread.sleep(2000);
+				}
+			}
+			else if (countWords(game) > 1){
+				int i = game.indexOf(' ');
+				String command = game.substring(0, i);
+				String rest = game.substring(i);
+
+				if (command.equalsIgnoreCase("use")) {
+					Use( rest, inventoryNew, foundNew, inventory, locksTrue, glassDoor, safeCode, player, checkTrueFalse, rooms);
+				}
+				else if (command.equalsIgnoreCase("check")) {
+					Check(safeCode, rest, rooms, player, foundNew, inventory, inventoryNew, locksTrue, hammerRoom, checkTrueFalse, hammer);
+				}
+				else if (command.equalsIgnoreCase("enter")) {
+					Enter(rooms, player, rest);
+				}
+				else {
+					System.out.println("Nothing happened");
+				}//end if
+			}
+		}//end while
+
+	}//end main
+
+	private static void Use(String rest, String[] inventoryNew, int foundNew, String[][] inventory, boolean[] locksTrue, boolean[] glassDoor, int safeCode, boolean[] player, boolean[] checkTrueFalse, String[][] rooms) throws InterruptedException {
+		//initialize variables
+		Scanner input= new Scanner(System.in);
+
+		//stores whether or not there was a valid input for each category
+		boolean usable = false;
+		boolean inventoryUsable = false;
+
+		int locks = 0;
+		for (int i = 0; i<locksTrue.length; i++) {
+			if (locksTrue[i] == false) {
+				locks++;
+			}
+		}//end for locksAmount
+
+		int inputUse = 0;
+		int playerLocation = 0;
+		//initialize player location
+		for (int i = 0; i<player.length; i++) {
+			if (player[i] == true) {
+				playerLocation = i;
+			}
+		}//end for
+
+		//usable objects
+		String[][] use = new String[10][2];
+		use[0][0] = (" painting");
+		use[1][0] = (" safe");//safe code //found if correct
+		use[2][0] = (" blinds");
+		use[3][0] = (" shower");
+		use[4][0] = (" exit");
+		use[5][0] = (" door");//move player	
+		use[6][0] = (" glass door");
+		use[7][0] = (" right door");
+		use[8][0] = (" left door");
+		use[9][0] = (" cushions");
+
+		//usable object outcome text
+		use[0][1] = "Behind the painting is a wall safe with a four digit code";
+		use[1][1] = "enter safe code: ";
+		use[2][1] = "you lifted the blinds, moonlight fills the room";
+		use[3][1] = "hot water starts pouring from the shower head";
+		use[4][1] = "There are" + locks + ", holding it shut";
+		use[6][1] = "It's jammed";
+
+		//compares user input to use array
+		for (int i = 0; i<use.length; i++) {
+			if (rest.equalsIgnoreCase(use[i][0])) {
+				usable = true;
+				inputUse = i;
+				break;
+			}
+		}//end use for
+
+		//out lines for use
+		if (usable == true) {
+			//if player is in room zero, the bedroom
+			if (playerLocation == 0) {
+				if (inputUse == 0) {
+					System.out.println(use[0][1]);
+				}
+				//safe options
+				else if (inputUse == 1) {
+					System.out.println(use[inputUse][1]);
+					int code;
+					while (true){
+						try {
+							code = input.nextInt();
+							break;
+						} catch (Exception e) {
+							System.out.println("nothing happened");
+							input.nextLine();
+						} 
+					}
+					if (code == safeCode) {
+						System.out.println("The safe opens");
+						if (inventoryNew[5] == null) {
+							System.out.println("you found a Rusty Key");
+							foundNew = 5;
+							Found(inventory, foundNew, inventoryNew);
+							foundNew = 2;
+							Remove(foundNew, inventoryNew);
+						}
+						if (inventoryNew[3] == null) {
+							System.out.println("you found a Picture");
+							foundNew = 3;
+							Found(inventory, foundNew, inventoryNew);
+						}
+						else if (inventoryNew[3] != null && inventoryNew[5] != null) {
+							System.out.println("It's empty");
+						}
+					}
+					else if (code != safeCode) {
+						System.out.println("nothing happens");
+					}	
+				}//end safe options
+				//blinds
+				else if (inputUse == 2 ) {
+					System.out.println(use[2][1]);
+					checkTrueFalse[0]= true;
+					checkTrueFalse[1] = true;
+				}
+			}// end: if player is in room 0 end
+
+			else if (playerLocation == 1) {
+				//living room
+				if (inputUse == 6) {
+				System.out.println(use[inputUse][1]);
+				}
+				else if (inputUse == 9 && inventoryNew[0] == null) {
+					System.out.println("You move the cushions out of the way\nYou found a Wooden Box");
+					foundNew = 0;
+					Found(inventory, foundNew, inventoryNew);
+					checkTrueFalse[2] = true;
+				}
+				else {
+					System.out.println("Nothing happened");
+				}
+			}
+			else if (playerLocation == 5 && inputUse == 3) {
+				//bathroom
+				checkTrueFalse[3] = true;
+				if (checkTrueFalse[4] == false) {
+					System.out.println(use[inputUse][1]);
+					checkTrueFalse[4] = true;
+				}
+				else if (checkTrueFalse[4] == true) {
+					System.out.println("you turn the shower off");
+					checkTrueFalse[4] = false;
+				}
+			}//end shower if
+
+			else if (playerLocation == 4 && inputUse == 4) {
+				//entry hall
+				System.out.println(use[inputUse][1]);
+			}
+			if (inputUse == 5) {
+				//door
+				if (playerLocation == 0) {
+					rest = ( " living room");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 1) {
+					rest = (" bedroom");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 2) {
+					rest = (" kitchen");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 3) {
+					rest = (" dining room");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 4) {
+					rest = (" kitchen");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 5) {
+					rest = (" entry hall");
+					Enter(rooms, player, rest);
+				}
+			}//end door if
+			else if (inputUse == 7) {
+				//right door
+				if (playerLocation == 1) {
+					rest = (" dining room");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 4) {
+					rest = (" bathroom");
+					Enter(rooms, player, rest);
+				}
+			}//end right door if
+
+			else if (inputUse == 8) {
+				//left door
+				if (playerLocation == 1) {
+					System.out.println("It's jammed, you can see the moon through the glass");
+				}
+				else if (playerLocation == 3) {
+					rest  = (" entry hall");
+					Enter(rooms, player, rest);
+				}
+				else if (playerLocation == 4) {
+					System.out.println("It’s jammed, something heavy seems to be on the other side");
+				}
+			}//end left door if
+		}//end use decisions
+
+		else if (usable == false) {
+			//compares use input to inventory array
+			for (int i = 0; i<inventory.length; i++) {
+				if (rest.equalsIgnoreCase(inventory[i][0]) && inventoryNew[i] != null) {
+					inventoryUsable = true;
+					inputUse = i;
+					break;
+				}
+			}//end inventory for	
+		}
+		//out lines for inventory
+		if (inventoryUsable == true) {
+			//if object isn't usable, run check instead
+			if (inputUse< 4) {
+				System.out.println(inventory[inputUse][1]);
+			}//end object not use
+			//Microwave Steak
+			else if (inputUse == 4) {
+				//independently usable object
+				System.out.println("you eat the Warm Steak, you don’t feel hungry anymore but as you eat,\nyou bite down on something hard");//found
+				System.out.println("You found Meat Key");
+				foundNew = 10;
+				Found(inventory, foundNew, inventoryNew);
+				foundNew = 4;
+				Remove(foundNew, inventoryNew);
+			}
+			//if input use on
+			else if (inputUse > 4) {
+				System.out.println("What do you want to use it on? ");
+				String game = input.nextLine();
+
+				//rusty key on box
+				if (inputUse == 5 && (game.equalsIgnoreCase("wooden box") || game.equalsIgnoreCase("box")) && inventoryNew[0] != null) {
+					System.out.println("The box opens,\ninside is a wooden doll with blackened eyes and a small book\nfound Book");
+					foundNew = 5;
+					Remove(foundNew, inventoryNew);
+					foundNew = 1;
+					Found(inventory, foundNew, inventoryNew);
+					foundNew = 0;
+					Remove(foundNew, inventoryNew);
+				}
+				//steak on microwave
+				else if (inputUse == 6 && game.equalsIgnoreCase("microwave")) {
+					System.out.println("you heat the steak up in the microwave");
+					foundNew = 4;
+					Found(inventory, foundNew, inventoryNew);
+					System.out.println("You found Warm Steak");
+					foundNew = 6;
+					Remove(foundNew, inventoryNew);
+				}
+				//dirty key on sink
+				else if (inputUse == 8 && game.equalsIgnoreCase("sink")) {
+					System.out.println("you wash the dirty key (and your hands),\nyou found Shiny Key, \nit’s the same key but you feel slightly better");
+					foundNew = 9;
+					Found(inventory, foundNew, inventoryNew);
+					System.out.println("found Shiny Key");
+					foundNew = 8;
+					Remove(foundNew, inventoryNew);
+				}
+				//all exit door locks
+				else if (inputUse == 8 && (game.equalsIgnoreCase("exit") || game.equalsIgnoreCase("front door") || game.equalsIgnoreCase("padlock"))) {
+					System.out.println("a sterling silver padlock falls off");
+					locks = locks - 1;
+					locksTrue[0] = true;
+					foundNew = 8; 
+					Remove(foundNew, inventoryNew);
+				}
+				else if (inputUse == 9 && (game.equalsIgnoreCase("exit") || game.equalsIgnoreCase("front door") || game.equalsIgnoreCase("padlock"))) {
+					System.out.println("a sterling silver padlock falls off");
+					locks = locks - 1;
+					locksTrue[0] = true;
+					foundNew = 9;
+					Remove(foundNew, inventoryNew);
+				}
+				else if (inputUse == 10 && (game.equalsIgnoreCase("exit") || game.equalsIgnoreCase("front door") || game.equalsIgnoreCase("padlock"))) {
+					System.out.println("A red, odd smelling padlock falls off");
+					locks = locks - 1;
+					locksTrue[1] = true;
+					foundNew = 10;
+					Remove(foundNew, inventoryNew);
+				}
+				else if (inputUse == 7 && (game.equalsIgnoreCase("exit") || game.equalsIgnoreCase("front door") || game.equalsIgnoreCase("padlock"))) {
+					System.out.println("An ornate, golden padlock falls off");
+					locks = locks - 1;
+					locksTrue[2] = true;
+					foundNew = 7;
+					Remove(foundNew, inventoryNew);
+				}//end key lock options
+
+				else if (inputUse == 11 && game.equalsIgnoreCase("glass door")) {//balcony
+					System.out.println("The glass shatters and you step onto the balcony, the cold air blows against you");
+					glassDoor[0] = true;
+					foundNew = 11;
+					Remove(foundNew, inventoryNew);
+					Thread.sleep(5000);
+				}
+				else {
+					System.out.println("Nothing happened");
+				}
+			}//end use on if
+		}//end inventory use
+		else if (inventoryUsable == false && usable == false) {
+			System.out.println("nothing happened");
+		}//end all false else if
+	}//end Use
+
+	private static void Check(int safeCode, String rest, String[][] rooms, boolean[] player, int foundNew, String[][] inventory, String[] inventoryNew, boolean[] locksTrue, int hammerRoom, boolean[] checkTrueFalse, boolean[] hammer) {
+
+		//initialize variables
+		boolean checkB = false;
+		boolean checkV = false;
+		boolean looked = false;
+		boolean inventoryChecked = false;
+		int check = 0;
+
+		//initialize player location
+		int playerLocation = 0;
+		for (int i = 0; i<player.length; i++) {
+			if (player[i] == true) {
+				playerLocation = i;
+				break;
+			}
+		}//end for playerLocation
+
+		//initialize locks
+		int locks = 0;
+		for (int i = 0; i<locksTrue.length; i++) {
+			if (locksTrue[i] == false) {
+				locks++;
+			}
+		}//end for locks
+
+		//initialize check options that have no other affects
+		String[][] checkBasic = new String[28][2];
+
+		checkBasic[0][0] = (" painting");
+		checkBasic[1][0] = (" blinds");
+		checkBasic[2][0] = (" writing");//bedroom
+		checkBasic[3][0] = (" note");//living room
+		checkBasic[4][0] = (" coffee table");
+		checkBasic[5][0] = (" flowers");
+		checkBasic[6][0] = (" magazines");
+		checkBasic[7][0] = (" tv");
+		checkBasic[8][0] = (" television");
+		checkBasic[11][0] = (" page");//end living room
+		checkBasic[12][0] = (" table");//check dining
+		checkBasic[13][0] = (" chairs");//end dining
+		checkBasic[14][0] = (" counters");//kitchen
+		checkBasic[15][0] = (" countertops");
+		checkBasic[16][0] = (" microwave");
+		checkBasic[17][0] = (" cabinet");
+		checkBasic[18][0] = (" cabinets");//kitchen
+		checkBasic[19][0] = (" sink");//bath
+		checkBasic[20][0] = (" toothbrush");
+		checkBasic[21][0] = (" toilet");//bath
+		checkBasic[22][0] = (" front door");//entry
+		checkBasic[23][0] = (" laundry door");
+		checkBasic[24][0] = (" right door");//end entry
+		checkBasic[25][0] = (" under bed");//bed
+		checkBasic[26][0] = (" fridge");//found kitchen
+		checkBasic[27][0] = (" inside toilet");//found bathroom
+
+		//check basic out lines
+		checkBasic[0][1] = "It depicts a forest with a figure standing in the background";//painting
+		checkBasic[1][1] = "See no evil";
+		checkBasic[2][1] = "It has the word \"sorry\" scribbled repeatedly on the back and the date \"1983\"";//writing
+		checkBasic[3][1] = "The hammer is in the" + rooms[hammerRoom][0] +", the rest is illegible.\n";//note
+		checkBasic[4][1] = "there’s a pot of flowers and some old magazines littered across the table";//coffee table
+		checkBasic[5][1] = "They look like marigolds, they’re starting to wilt";//flowers
+		checkBasic[6][1] = "nothing worth reading";//magazines
+		checkBasic[7][1] = "an empty black screen, the remote’s missing";//tv
+		checkBasic[8][1] = "an empty black screen, the remote’s missing";//television
+		checkBasic[11][1] = "It says, “I’m sorry, I wasn’t myself, I didn’t mean to do that to you, \nI’ll make sure I never do it again, even if it means being locked away forever.” \nThere is also a note";
+		checkBasic[12][1] = "a wooden table surrounded by four wooden chairs";//table
+		checkBasic[13][1] = "a wooden table surrounded by four wooden chairs";//chairs
+		checkBasic[14][1] = "They're littered with rotting food and various utensils, on top of one is a microwave";//cabinet(s)
+		checkBasic[15][1] = "They're littered with rotting food and various utensils, on top of one is a microwave";
+		checkBasic[16][1] = "it’s empty";//microwave
+		checkBasic[17][1] = "there are some pots and pans, nothing useful";
+		checkBasic[18][1] = "there are some pots and pans, nothing useful";
+		checkBasic[19][1] = "a toothbrush sits carelessly on the side";//sink
+		checkBasic[20][1] = "you don’t have time for that, you need to escape";//toothbrush
+		checkBasic[21][1] = "there’s a glint of light coming from Inside Toilet";//toilet
+		checkBasic[22][1] = "it looks like the exit, there are " +locks+ " padlocks holding it shut, \nwhoever put them there desperately wanted to keep something out\n…or in";
+		checkBasic[23][1] = "it’s jammed, something heavy seems to be on the other side";
+		checkBasic[24][1] = "it’s a door, it doesn't seem to be locked";
+		checkBasic[25][1] = "there's some clothes and garbage that have been carelessly pushed here";
+		checkBasic[26][1] = "It's mostly empty,\nTheres a carton of milk and half a lemon";
+		checkBasic[27][1] = "It's actually pretty clean";
+
+		//Checkable that change
+		String[][] checkVaries = new String[5][3];
+
+		checkVaries[0][0] = (" bed"); //has two outcomes depending on a use
+		checkVaries[1][0] = (" window");
+		checkVaries[2][0] = (" couch");
+		checkVaries[3][0] = (" mirror");
+		checkVaries[4][0] = (" shower");
+
+		//before
+		checkVaries[0][1] = "You don’t feel tired";//before window after key
+		checkVaries[1][1] = "there are blinds covering it";//window
+		checkVaries[2][1] = "Soft grey cushions lined up neatly, there is something is nestled between the cushions";//couch
+		checkVaries[3][1] = "despite everything, it’s still you";//mirror
+		checkVaries[4][1] = "there’s water dripping from the shower head";//start add one //shower
+
+		//after
+		checkVaries[0][2] = "There is a glint of light coming from Under Bed";//bed after window
+		checkVaries[1][2] = "the window’s jammed, moonlight is pouring into the room";//window after blinds
+		checkVaries[2][2] = "soft grey cushions littered around the couch";//couch after cushion
+		checkVaries[3][2] = "The glass has fogged up,\nThere’s four numbers written: "+ safeCode;//mirror after shower
+		checkVaries[4][2] = "hot water is pouring from the shower head";//shower after used
+
+		//checks if the input is a room
+		if (rest.equalsIgnoreCase(" room")) {
+			look(player, rooms, hammer, hammerRoom, foundNew, inventory, inventoryNew);
+			looked = true;
+		}
+		//checks if input is from inventory
+		for (int i = 0; i<inventory.length; i++) {
+			if (rest.equalsIgnoreCase(inventory[i][0])) {
+				if (inventoryNew[i] != null) {
+					System.out.println(inventory[i][1]);
+					inventoryChecked = true;
+					break;
+				}
+			}
+		}//end inventory for
+
+		//check if input is possible in varies
+		for (int i = 0; i<checkVaries.length; i++) {
+			if (rest.equalsIgnoreCase(checkVaries[i][0])){
+				checkV = true;
+				check = i;
+				break;
+			}
+		}//end for
+		//check varies
+		if (checkV == true) {
+			//check before
+			if (checkTrueFalse[check] == false) {
+				if (check < 2 && playerLocation == 0) {
+					System.out.println(checkVaries[check][1]);
+				}
+				else if (check == 2 && playerLocation == 1) {
+					System.out.println(checkVaries[check][1]);
+				}
+				else if (check > 2 && playerLocation == 5) {
+					System.out.println(checkVaries[check][1]);
+				}
+				else {
+					System.out.println ("Nothing happened\nHint: you're in the" + rooms[playerLocation][0]);
+				}
+			}//end if check before
+
+			//check afters
+			else if (checkTrueFalse[check] == true) {
+				if (check < 2 && playerLocation == 0) {
+					System.out.println(checkVaries[check][2]);
+				}
+				else if (check == 2 && playerLocation == 1) {
+					System.out.println(checkVaries[check][2]);
+				}
+				else if (check > 2 && playerLocation == 5) {
+					if (check == 3) {
+						System.out.println(checkVaries[check][2]);
+						if (inventoryNew[2] == null) {
+							System.out.println("You found Safe Code");
+							foundNew = 2;
+							Found(inventory, foundNew, inventoryNew);
+						}
+					}
+					else if (check == 4) {
+						System.out.println(checkVaries[check][2]);
+					}
+				}
+				else {
+					System.out.println ("Nothing happened\nHint: you're in the" + rooms[playerLocation][0]);
+				}
+			}//end if: check after
+		}//end check varies
+
+		else {
+			//check if input is possible in basic
+			for (int i = 0; i<checkBasic.length; i++) {
+				if (rest.equalsIgnoreCase(checkBasic[i][0])) {
+					checkB = true;
+					check = i;
+				}
+			}//end for
+		}
+		//check basic
+		if (checkB == true) {
+			if (check < 2 && playerLocation == 0) {
+				//bedroom
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check == 2 && inventoryNew[3] != null) {
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check == 3 && inventoryNew[1] != null) {
+				System.out.println(checkBasic[check][1]);
+				hammer[0] = true;
+			}
+			else if (check > 3 && check < 12 && playerLocation == 1) {
+				//living room
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check == 11 && inventoryNew[1] != null) {
+				System.out.println(checkBasic[check][1]);
+				hammer[0] = true;
+			}
+			else if (check > 11 && check < 14 && playerLocation == 2) {
+				//dining room
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check > 13 && check < 19 && playerLocation == 3) {
+				//kitchen
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check > 18 && check < 22 && playerLocation == 5) {
+				//bathroom
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check > 21 && check < 25 && playerLocation == 4) {
+				//entry
+				System.out.println(checkBasic[check][1]);
+			}
+			else if (check > 24) {
+				//three with founds
+				if (check == 25 && playerLocation == 0) {
+					System.out.println(checkBasic[check][1]);
+					if (inventoryNew[7] == null) {
+						System.out.println("you found a Gold Key");
+						foundNew = 7;
+						Found(inventory, foundNew, inventoryNew);
+						checkTrueFalse[0] = false;
+					}
+				}//end gold key
+				else if (check == 26 && playerLocation == 3) {
+					System.out.println(checkBasic[check][1]);
+					if (inventoryNew[6] == null) {
+						System.out.println("sitting on a plate is a precooked piece of steak,\nyou found Cold Steak");
+						foundNew = 6;
+						Found(inventory, foundNew, inventoryNew);
+					}
+				}//end cold steak
+				else if (check == 27 && playerLocation == 5) {
+					System.out.println(checkBasic[check][1]);
+					if (inventoryNew[8] == null) {
+						System.out.println("you found a Dirty Key");
+						foundNew = 8;
+						Found(inventory, foundNew, inventoryNew);
+					}
+				}//end dirty key
+			}//end check with founds
+		}//end check basic
+		if (checkV == false && checkB == false && looked == false && inventoryChecked == false) {
+			System.out.println("Nothing happened");
+		}//end if
+
+	}//end Check
+
+	private static int countWords(String game) {
+		//Separates and counts words in the game string
+		if(game == null){
+			return 0;  
+		}
+		game = game.trim();
+		return game.split("\\s+").length;
+	}//end countWords
+
+	private static void Remove(int foundNew, String[] inventoryNew) {
+		//remove item from player inventory
+		inventoryNew[foundNew] = null;
+	}
+
+	private static void Found(String[][] inventory, int foundNew, String[] inventoryNew) {
+		//add item to player inventory
+		inventoryNew[foundNew] = inventory[foundNew][0];
+
+	}//end Found
+
+	private static void Inventory(String[] inventoryNew) {
+		//initialize variable
+		int empty = 0;
+
+		//check if inventory is empty
+		for (int i= 0; i<inventoryNew.length; i++) {
+			if (inventoryNew[i] == null) {
+				empty ++;
+			}
+		}
+		if (empty == inventoryNew.length) {
+			System.out.println("You haven't found anything yet");
+		}
+		//outs inventory
+		else {
+			for (int i= 0; i<inventoryNew.length; i++) {
+				if (inventoryNew[i] != null) {
+					System.out.println("-" + inventoryNew[i]);
+				}
+			}//end for
+		}//end if
+	}//end Inventory
+
+	private static void jump() {
+		//print new lines (since flush doesn't work)
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	}//end jump
+
+	private static boolean[] Enter(String[][] rooms, boolean[] player, String rest) {
+
+		boolean move = false;
+		//initialize player location
+		int playerLocation = 0;
+		for (int i = 0; i<player.length; i++) {
+			if (player[i] == true) {
+				playerLocation = i;
+			}
+		}//end for
+
+		for (int i= 0; i<rooms.length; i++) {
+			if (rest.equalsIgnoreCase(rooms[i][0])) {
+				move = true;
+				if (i <= (playerLocation +1) && i >= (playerLocation -1)) {
+					player[i] = true;
+					jump();
+					System.out.println(rooms[i][3]);
+					System.out.println(rooms[i][2]);
+					player[playerLocation] = false;
+					return player;
+				}
+				else {
+					System.out.println("you're too far away");
+					break;
+				}
+			}//end if
+		}//end for
+		if (move == false) {
+			System.out.println("Nothing Happened");
+		}
+		return player;
+
+	}// end Enter
+
+	private static void look(boolean[] player, String[][] rooms, boolean[] hammer, int hammerRoom, int foundNew, String[][] inventory, String[] inventoryNew) {
+		int location = 0;
+
+		for (int i = 0; i<player.length; i++) {
+		
+			if (player[i] == true) {
+				location = i;
+				break;
+			}
+		}
+		//hammer find
+		if (hammer[0] == true && hammerRoom == location && inventoryNew[11] == null) {
+			System.out.println("You found a Hammer");
+			foundNew = 11;
+			Found(inventory, foundNew, inventoryNew);
+		}
+		
+		//prints the room description of players location
+		System.out.println(rooms[location][1]);
+
+	}//end look
+	
+}//end class
